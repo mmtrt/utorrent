@@ -65,7 +65,7 @@ parts:
     plugin: nil
     source: ./scripts
     override-build: |
-      snapcraftctl build
+      snapcraftctl set-version $ver.$bnum
       set -ex
       ver="$(wget http://www.utorrent.com/downloads/win -q -S -O - 2>&1 | grep Stable | awk '{print $2}' | sed 's|Stable(||')"
       bnum="$(wget http://www.utorrent.com/downloads/win -q -S -O - 2>&1 | grep Stable | awk '{print $4}' | sed 's|)||')"
