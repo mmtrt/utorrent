@@ -155,7 +155,10 @@ progBin=$progName.exe
 
 if [ ! -d $progHome ];then
 mkdir -p $progHome
-touch $progHome/settings.dat
+for dt in settings.dat settings.dat.new settings.dat.old dht.dat dht.dat.new dht.dat.old dht_feed.dat dht_feed.dat.new dht_feed.dat.old updates.dat updates.dat.new updates.dat.old rss.dat rss.dat.new rss.dat.old resume.dat resume.dat.new resume.dat.old
+do
+touch $progHome/$dt
+done
 fi
 
 # Delete broken symlinks
