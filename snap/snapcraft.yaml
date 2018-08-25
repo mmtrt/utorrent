@@ -4,7 +4,7 @@ summary: utorrent is the no-1 BitTorrent download client on desktops worldwide.
 description: |
  utorrent is a proprietary BitTorrent client owned and developed by BitTorrent, Inc. With over 100 million users it is the most widely used BitTorrent client. The program was designed to use minimal computer resources while offering functionality comparable to larger BitTorrent clients such as Vuze or BitComet.
 
-confinement: devmode
+confinement: strict
 grade: stable
 architectures:
   - build-on: amd64
