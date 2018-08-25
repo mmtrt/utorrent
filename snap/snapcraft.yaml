@@ -1,6 +1,5 @@
 name: utorrent
-version: latest
-version-script: cat $SNAPCRAFT_STAGE/version
+version: 3.5.4.44520
 summary: utorrent is the no-1 BitTorrent download client on desktops worldwide.
 description: |
  utorrent is a proprietary BitTorrent client owned and developed by BitTorrent, Inc. With over 100 million users it is the most widely used BitTorrent client. The program was designed to use minimal computer resources while offering functionality comparable to larger BitTorrent clients such as Vuze or BitComet.
@@ -65,11 +64,8 @@ parts:
     plugin: nil
     source: ./scripts
     override-build: |
-      snapcraftctl set-version $ver.$bnum
+      snapcraftctl build
       set -ex
-      ver="$(wget http://www.utorrent.com/downloads/win -q -S -O - 2>&1 | grep Stable | awk '{print $2}' | sed 's|Stable(||')"
-      bnum="$(wget http://www.utorrent.com/downloads/win -q -S -O - 2>&1 | grep Stable | awk '{print $4}' | sed 's|)||')"
-      echo $ver.$bnum > $SNAPCRAFT_STAGE/version
       ./dl_ut
     stage:
       - bin

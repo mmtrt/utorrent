@@ -27,15 +27,13 @@ mkut () {
 }
 
 mkdsk () {
-ver="$(wget http://www.utorrent.com/downloads/win -q -S -O - 2>&1 | grep Stable | awk '{print $2}' | sed 's|Stable(||')"
-bnum="$(wget http://www.utorrent.com/downloads/win -q -S -O - 2>&1 | grep Stable | awk '{print $4}' | sed 's|)||')"
 cat > utorrent.desktop <<'EOF1'
 [Desktop Entry]
 Name=µTorrent
 GenericName=BitTorrent Client
 Comment=The world's most popular BitTorrent client
 Encoding=UTF-8
-Version=
+Version=3.5.4.44520
 Type=Application
 Terminal=false
 Icon=${SNAP}/usr/share/pixmaps/utorrent.png
@@ -44,7 +42,6 @@ StartupWMClass=utorrent.exe
 Categories=Network;FileTransfer;P2P;
 MimeType=application/x-bittorrent;x-scheme-handler/magnet;
 EOF1
-sed -i -e 's|Version=|Version='"$ver.$bnum"'|g' utorrent.desktop
 }
 
 dlut
