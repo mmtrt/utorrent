@@ -11,14 +11,10 @@
 
 dlut () {
     wget --accept "*.exe" --content-disposition --trust-server-names http://download-hr.utorrent.com/track/stable/endpoint/utorrent/os/windows &> /dev/null
-    for fnts in andalemo.ttf arialbd.ttf arialbi.ttf ariali.ttf arial.ttf ariblk.ttf comicbd.ttf comic.ttf courbd.ttf courbi.ttf couri.ttf cour.ttf georgiab.ttf georgiai.ttf georgia.ttf georgiaz.ttf impact.ttf l_10646.ttf lucon.ttf micross.ttf symbol.ttf tahomabd.ttf tahoma.ttf timesbd.ttf timesbi.ttf timesi.ttf times.ttf trebucbd.ttf trebucbi.ttf trebucit.ttf trebuc.ttf verdanab.ttf verdanai.ttf verdana.ttf verdanaz.ttf webdings.ttf wingding.ttf
-    do
-    wget https://github.com/caarlos0-graveyard/msfonts/blob/master/fonts/$fnts?raw=true -P share/wine/fonts &> /dev/null
-    mv share/wine/fonts/$fnts?raw=true share/wine/fonts/$fnts
-    done
 }
 
 mkut () {
+    mkdir -p usr/share && mkdir wine-platform
     7z x uTorrent.exe Carrier.exe -o"usr/share/utorrent"
     mv usr/share/utorrent/Carrier.exe usr/share/utorrent/utorrent.exe
     find "usr" -type d -execdir chmod 755 {} +
@@ -47,4 +43,4 @@ EOF1
 dlut
 mkut
 mkdsk
-mv utorrent bin && mv utorrent.desktop usr/share/applications && cp -R -p {bin,usr,share} $SNAPCRAFT_PART_INSTALL
+mv utorrent bin && mv utorrent.desktop usr/share/applications && cp -R -p {bin,usr,wine-platform} $SNAPCRAFT_PART_INSTALL
