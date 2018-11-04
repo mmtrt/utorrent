@@ -14,11 +14,10 @@ dlut () {
 }
 
 mkut () {
-    mkdir -p usr/share && mkdir wine-platform
+    mkdir ./{wine-platform,bin} && mkdir -p usr/share/{pixmaps,applications}
     7z x uTorrent.exe Carrier.exe -o"usr/share/utorrent"
     mv usr/share/utorrent/Carrier.exe usr/share/utorrent/utorrent.exe
     find "usr" -type d -execdir chmod 755 {} +
-    mkdir -p usr/share/pixmaps && mkdir -p usr/share/applications && mkdir bin
     wrestool -x -t3 -n62 -R usr/share/utorrent/utorrent.exe > usr/share/pixmaps/utorrent.png
 }
 
