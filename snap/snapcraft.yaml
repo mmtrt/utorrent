@@ -26,7 +26,7 @@ apps:
 parts:
   utorrent:
     plugin: nil
-    source: ./scripts
+    source: ./src
     override-build: |
       snapcraftctl build
       set -ex
@@ -35,4 +35,4 @@ parts:
       - bin
       - usr
       - wine-platform
-    build-packages: [wget, icoutils, p7zip-full]
+    build-packages: [wget]

@@ -13,12 +13,24 @@ dlut () {
     wget --accept "*.exe" --content-disposition --trust-server-names http://download-hr.utorrent.com/track/stable/endpoint/utorrent/os/windows &> /dev/null
 }
 
+dli7z16x64 () {
+    for dldebs in https://launchpad.net/ubuntu/+source/p7zip/16.02+dfsg-4/+build/13091326/+files/p7zip_16.02+dfsg-4_amd64.deb https://launchpad.net/ubuntu/+source/p7zip/16.02+dfsg-4/+build/13091326/+files/p7zip-full_16.02+dfsg-4_amd64.deb 
+    do
+    wget $dldebs &> /dev/null
+    done
+
+    for pkgdebins in p7zip_16.02+dfsg-4_amd64.deb p7zip-full_16.02+dfsg-4_amd64.deb
+    do
+    sudo apt install ./$pkgdebins -y &> /dev/null
+    rm $pkgdebins
+    done
+}
+
 mkut () {
     mkdir ./{wine-platform,bin} && mkdir -p usr/share/{pixmaps,applications}
-    7z x uTorrent.exe Carrier.exe -o"usr/share/utorrent"
-    mv usr/share/utorrent/Carrier.exe usr/share/utorrent/utorrent.exe
+    7z x uTorrent.exe Carrier.EXE -o"usr/share/utorrent"
+    mv usr/share/utorrent/Carrier.EXE usr/share/utorrent/utorrent.exe
     find "usr" -type d -execdir chmod 755 {} +
-    wrestool -x -t3 -n62 -R usr/share/utorrent/utorrent.exe > usr/share/pixmaps/utorrent.png
 }
 
 mkdsk () {
@@ -40,6 +52,7 @@ EOF1
 }
 
 dlut
+dli7z16x64
 mkut
 mkdsk
-mv utorrent bin && mv utorrent.desktop usr/share/applications && cp -R -p {bin,usr,wine-platform} $SNAPCRAFT_PART_INSTALL
+mv utorrent bin && mv utorrent.desktop usr/share/applications && mv utorrent.png usr/share/pixmaps && cp -R -p {bin,usr,wine-platform} $SNAPCRAFT_PART_INSTALL
