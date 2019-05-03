@@ -28,8 +28,8 @@ dli7z16x64 () {
 
 mkut () {
     mkdir ./{wine-platform,bin} && mkdir -p usr/share/{pixmaps,applications}
-    7z x uTorrent.exe Carrier.EXE -o"usr/share/utorrent"
-    mv usr/share/utorrent/Carrier.EXE usr/share/utorrent/utorrent.exe
+    7z x uTorrent.exe Carrier.exe -o"usr/share/utorrent"
+    mv usr/share/utorrent/Carrier.exe usr/share/utorrent/utorrent.exe
     find "usr" -type d -execdir chmod 755 {} +
 }
 
