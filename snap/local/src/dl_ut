@@ -27,7 +27,7 @@ dli7z16x64 () {
 }
 
 mkut () {
-    mkdir ./{wine-platform,bin} && mkdir -p usr/share/{pixmaps,applications}
+    mkdir ./{wine-runtime,wine-platform,bin} && mkdir -p usr/share/{pixmaps,applications}
     7z x uTorrent.exe Carrier.exe -o"usr/share/utorrent"
     mv usr/share/utorrent/Carrier.exe usr/share/utorrent/utorrent.exe
     find "usr" -type d -execdir chmod 755 {} +
@@ -55,4 +55,4 @@ dlut
 dli7z16x64
 mkut
 mkdsk
-mv utorrent bin && mv utorrent.desktop usr/share/applications && mv utorrent.png usr/share/pixmaps && cp -R -p {bin,usr,wine-platform} $SNAPCRAFT_PART_INSTALL
+mv utorrent bin && mv utorrent.desktop usr/share/applications && mv utorrent.png usr/share/pixmaps && cp -R -p {bin,usr,wine-runtime,wine-platform} $SNAPCRAFT_PART_INSTALL

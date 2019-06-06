@@ -12,11 +12,14 @@ architectures:
 base: core18
 
 plugs:
-  wine-platform-plug:
-    content: wine-base-stable
+  wine-runtime:
+    interface: content
+    target: $SNAP/wine-runtime
+    default-provider: wine-platform-runtime
+  wine-3-stable:
     interface: content
     target: $SNAP/wine-platform
-    default-provider: wine-platform
+    default-provider: wine-platform-3-stable
   icon-themes:
     interface: content
     target: $SNAP/data-dir/icons
@@ -26,12 +29,12 @@ apps:
   utorrent:
     command: utorrent
     desktop: usr/share/applications/utorrent.desktop
-    plugs: [ wayland, x11, opengl, home, desktop, desktop-legacy, network, network-observe, mount-observe, hardware-observe, process-control, cups-control, browser-support, wine-platform-plug ]
+    plugs: [ wayland, x11, opengl, home, desktop, desktop-legacy, network, network-observe, mount-observe, hardware-observe, process-control, cups-control, browser-support, icon-themes, wine-runtime, wine-3-stable ]
 
 parts:
   utorrent:
     plugin: nil
-    source: ./src
+    source: ./snap/local/src
     override-build: |
       snapcraftctl build
       set -ex
@@ -40,4 +43,5 @@ parts:
       - bin
       - usr
       - wine-platform
+      - wine-runtime
     build-packages: [wget]
