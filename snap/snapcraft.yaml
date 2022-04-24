@@ -1,8 +1,9 @@
 name: utorrent
-version: 3.5.5.45828
+title: uTorrent (WINE)
 summary: utorrent is the no-1 BitTorrent download client on desktops worldwide.
 description: |
  utorrent is a proprietary BitTorrent client owned and developed by BitTorrent, Inc. With over 100 million users it is the most widely used BitTorrent client. The program was designed to use minimal computer resources while offering functionality comparable to larger BitTorrent clients such as Vuze or BitComet.
+adopt-info: utorrent
 
 confinement: strict
 grade: stable
@@ -10,26 +11,55 @@ architectures:
   - build-on: amd64
     run-on: [amd64, i386]
 base: core18
+compression: lzo
 
 plugs:
   wine-runtime:
     interface: content
     target: $SNAP/wine-runtime
     default-provider: wine-platform-runtime
-  wine-3-stable:
+  wine-6-stable:
     interface: content
     target: $SNAP/wine-platform
-    default-provider: wine-platform-3-stable
-  icon-themes:
-    interface: content
-    target: $SNAP/data-dir/icons
-    default-provider: gtk-common-themes
+    default-provider: wine-platform-6-stable
+
+environment:
+  WINEDLLOVERRIDES: "mscoree,mshtml=" # Prevent pop-ups about Wine Mono and Wine Gecko
+  RUN_EXE: "$SNAP_USER_DATA/utorrent/utorrent.exe"
+  SOMMELIER_KEEP_CWD: "1" # Don't change the working directory so relative paths still work
+  NO_AT_BRIDGE: "1" # Fix yad error Failed to connect to socket /tmp/dbus-xxx: No such file or directory
+  DISABLE_WAYLAND: "1" # Fix gtk decoration under wayland session
 
 apps:
   utorrent:
-    command: utorrent
+    extensions: [ gnome-3-28 ]
+    command: bin/sommelier run-exe
+    plugs:
+      - home
+      - network
+      - removable-media
     desktop: usr/share/applications/utorrent.desktop
-    plugs: [ wayland, x11, opengl, home, desktop, desktop-legacy, network, network-observe, mount-observe, hardware-observe, process-control, cups-control, browser-support, icon-themes, wine-runtime, wine-3-stable ]
+
+  # The wine command can be used to run applications inside the wine
+  # environment that this snap uses.
+  #
+  # For example, users can configure the wine environment of this snap
+  # by running `myapp.wine winecfg`.
+  wine:
+    extensions: [ gnome-3-28 ]
+    command: bin/sommelier
+    plugs:
+      - home
+      - network
+      - removable-media
+
+  # The winetricks command can be used to run winetricks inside the wine
+  # environment that this snap uses.
+  winetricks:
+    extensions: [ gnome-3-28 ]
+    command: bin/sommelier winetricks
+    plugs:
+      - network
 
 parts:
   utorrent:
@@ -38,10 +68,25 @@ parts:
     override-build: |
       snapcraftctl build
       set -ex
+      snapcraftctl set-version "2.2.1"
       ./dl_ut
     stage:
       - bin
       - usr
       - wine-platform
       - wine-runtime
-    build-packages: [wget]
+      - sommelier
+
+  # The sommelier script helps you snap Windows applications using Wine. It
+  # initializes and configures Wine and installs the Windows application.
+  sommelier:
+    plugin: make
+    source: https://github.com/mmtrt/sommelier-core.git
+    source-branch: "tmp"
+
+  # This reverts changes from https://github.com/snapcore/snapcraft/pull/3586
+  fix-fontconfig:
+    plugin: nil
+    after: [gnome-3-28-extension]
+    override-prime: |
+      sed -i '/snap-package/,+1d' $SNAPCRAFT_PRIME/snap/command-chain/desktop-launch
