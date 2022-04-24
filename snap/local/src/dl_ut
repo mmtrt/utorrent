@@ -10,7 +10,7 @@
 #
 
 dlut () {
-    wget --accept "*.exe" --content-disposition --trust-server-names http://download-hr.utorrent.com/track/stable/endpoint/utorrent/os/windows &> /dev/null
+    wget --accept "*.exe" --content-disposition --trust-server-names "https://web.archive.org/web/20111003124659/http://www.oldapps.com/utorrent.php?app=22da0ddaf1bf9e0fb5c705319024429b" -O "utorrent.exe" &> /dev/null
 }
 
 dli7z16x64 () {
@@ -27,9 +27,10 @@ dli7z16x64 () {
 }
 
 mkut () {
-    mkdir ./{wine-runtime,wine-platform,bin} && mkdir -p usr/share/{pixmaps,applications}
-    7z x uTorrent.exe Carrier.exe -o"usr/share/utorrent"
-    mv usr/share/utorrent/Carrier.exe usr/share/utorrent/utorrent.exe
+    mkdir ./{wine-runtime,wine-platform,bin} && mkdir -p sommelier/hooks && mkdir -p usr/share/{pixmaps,applications,utorrent}
+#     7z x uTorrent.exe Carrier.exe -o"usr/share/utorrent"
+#     mv usr/share/utorrent/Carrier.exe usr/share/utorrent/utorrent.exe
+    cp utorrent.exe usr/share/utorrent/
     find "usr" -type d -execdir chmod 755 {} +
 }
 
@@ -40,7 +41,7 @@ Name=µTorrent
 GenericName=BitTorrent Client
 Comment=The world's most popular BitTorrent client
 Encoding=UTF-8
-Version=3.5.5.45828
+Version=2.2.1
 Type=Application
 Terminal=false
 Icon=${SNAP}/usr/share/pixmaps/utorrent.png
@@ -52,7 +53,7 @@ EOF1
 }
 
 dlut
-dli7z16x64
+# dli7z16x64
 mkut
 mkdsk
-mv utorrent bin && mv utorrent.desktop usr/share/applications && mv utorrent.png usr/share/pixmaps && cp -R -p {bin,usr,wine-runtime,wine-platform} $SNAPCRAFT_PART_INSTALL
+mv pre-install sommelier/hooks && mv utorrent.desktop usr/share/applications && mv utorrent.png usr/share/pixmaps && cp -R -p {sommelier,bin,usr,wine-runtime,wine-platform} $SNAPCRAFT_PART_INSTALL
