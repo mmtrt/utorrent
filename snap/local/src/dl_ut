@@ -40,14 +40,14 @@ Name=µTorrent
 GenericName=BitTorrent Client
 Comment=The world's most popular BitTorrent client
 Encoding=UTF-8
-Version=2.2.1
+Version=2.2.1.25110
 Type=Application
 Terminal=false
 Icon=${SNAP}/usr/share/pixmaps/utorrent.png
 Exec=utorrent %U
 StartupWMClass=utorrent.exe
 Categories=Network;FileTransfer;P2P;
-MimeType=application/x-bittorrent;x-scheme-handler/magnet;
+MimeType=application/x-bittorrent;application/x-torrent;x-scheme-handler/magnet;
 EOF1
 }
 
