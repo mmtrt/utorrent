@@ -69,7 +69,7 @@ parts:
     override-build: |
       snapcraftctl build
       set -ex
-      snapcraftctl set-version "2.2.1"
+      snapcraftctl set-version "2.2.1.25110"
       ./dl_ut
     stage:
       - bin
