@@ -10,7 +10,7 @@
 #
 
 dlut () {
-    wget --accept "*.exe" --content-disposition --trust-server-names "https://web.archive.org/web/20111003124659/http://www.oldapps.com/utorrent.php?app=22da0ddaf1bf9e0fb5c705319024429b" -O "utorrent.exe" &> /dev/null
+    wget --accept "*.exe" --content-disposition --trust-server-names "https://web.archive.org/web/20111003124659/http://www.oldapps.com/utorrent.php?app=22da0ddaf1bf9e0fb5c705319024429b" -P "usr/share/utorrent" &> /dev/null
 }
 
 dli7z16x64 () {
@@ -27,10 +27,9 @@ dli7z16x64 () {
 }
 
 mkut () {
-    mkdir ./{wine-runtime,wine-platform,bin} && mkdir -p sommelier/hooks && mkdir -p usr/share/{pixmaps,applications,utorrent}
+    mkdir ./{wine-runtime,wine-platform,bin} && mkdir -p sommelier/hooks && mkdir -p usr/share/{pixmaps,applications}
 #     7z x uTorrent.exe Carrier.exe -o"usr/share/utorrent"
-#     mv usr/share/utorrent/Carrier.exe usr/share/utorrent/utorrent.exe
-    cp utorrent.exe usr/share/utorrent/
+    mv usr/share/utorrent/utorrent_2.2.1.exe usr/share/utorrent/utorrent.exe
     find "usr" -type d -execdir chmod 755 {} +
 }
 
